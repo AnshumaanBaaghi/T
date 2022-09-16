@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web-111 C2</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: rgb(250, 250, 250);
+      
+      }
+
+      /* write necessery styles here  */
+     body{
+
+      text-align: center;
+     }
+     
+     
+      h1{
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 20px;
+       
+      }
+      #name{
+
+        margin-bottom: 15px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+      }
+      #category{
+
+        margin-bottom: 15px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+      }
+      #listed{
+        margin-bottom: 15px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+      }
+      #price{
+        margin-bottom: 15px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+      }
+      #addDate{
+        margin-bottom: 15px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+      }
+      #CAGR{
+        margin-bottom: 15px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+      }
+      #save{
+
+        margin-bottom: 95px;
+        height:40px;
+        width:500px;
+        font-size: 25px;
+
+      }
+      #search{
+        height:40px;
+        width:400px;
+        font-size: 25px;
+margin-bottom: 80px;
+      }
+      table{
+        margin:auto;
+        width:850px;
+        background-color: yellow;
+      }
+      
+
+    </style>
+  </head>
+  <body>
+    <div class="form">
+      <h1>Add new Stock</h1>
+      <form>
+        <input placeholder="Company Name" type="text" id="name" /><br>
+        <select id="category">
+          <option value="">Select Category</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Finance">Food</option>
+        </select><br>
+        <select id="listed">
+          <option value="">Select Listed Market</option><br>
+          <option value="NSC">NSC</option>
+          <option value="BSC">BSC</option>
+          <option value="NASDAQ">NASDAQ</option>
+        </select><br>
+        <input placeholder="Buying Price" type="number" id="price" /><br>
+        <input placeholder="Adding Date" type="date" id="addDate" /><br>
+        <input placeholder="CAGR" type="number" id="CAGR" /><br>
+        <input type="submit" value="Submit" id="save"/>
+      </form>
+    </div>
+
+    <input placeholder="Search" type="text" id="search">
+    <table>
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>Category</th>
+          <th>Listed Market</th>
+          <th>Buying Price</th>
+          <th>Byuing Date</th>
+          <th>Avg CAGR</th>
+          <th>Sell</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Append rows here -->
+
+
+      </tbody>
+    </table>
+  </body>
+
+  <script>
+    // Write all necessery JS Here 
+let form =document.querySelector("form");
+let tbody=document.querySelector("tbody");
+let search=document.getElementById("search");
+
+let formData_Array=[];
+form.addEventListener("submit",function (event){
+  event.preventDefault();
+
+  let formData={
+    name:form.name.value,
+    category:form.category.value,
+    listed:form.listed.value,
+    price: +form.price.value,
+    addDate: form.addDate.value,
+    CAGR:form.CAGR.value,
+    _id:Math.random(),
+  };
+  formData_Array.push(formData);
+  console.log(formData);
+  renderDOM(formData_Array)
+});
+
+function renderDOM(data){
+
+  tbody.innerHTML=null;
+  data.forEach(function (ele,index){
+let tr=document.createElement("tr");
+
+let name=document.createElement("td");
+name.textContent=ele.name;
+let category=document.createElement("td");
+category.textContent=ele.category;
+let listed=document.createElement("td");
+listed.textContent=ele.listed;
+
+let price=document.createElement("td");
+price.textContent=ele.price;
+let addDate=document.createElement("td");
+addDate.textContent=ele.addDate;
+let CAGR=document.createElement("td");
+CAGR.textContent=ele.CAGR;
+let sell=document.createElement("td");
+sell.addEventListener("click",function(){
+  sold(ele._id);
+});
+
+sell.textContent="Sell";
+tr.append(name,category,listed,price,addDate,CAGR,sell);
+tbody.append(tr);
+  });
+}
+function sold(_id){
+  formData_Array=formData_Array.filter(function (ele,index){
+
+    if(ele._id ===_id){
+      return false;
+    }else{
+      return true;
+    }
+  });
+  renderDOM(formData_Array);
+}
+  </script>
+</html>
